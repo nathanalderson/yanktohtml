@@ -1,0 +1,66 @@
+*yanktohtml.txt*  yanktohtml - Convert Markdown to HTML on yank  *yanktohtml*
+
+                          YANKTOHTML MANUAL
+
+1. About yanktohtml                                |yanktohtml-about|
+2. Requirements                                    |yanktohtml-requirements|
+3. Usage                                           |yanktohtml-usage|
+
+=============================================================================
+1. ABOUT YANKTOHTML ~
+                                                           *yanktohtml-about*
+
+This plugin provides a single function (`:YankToHtml`) which allows you to
+yank some markdown text and have it placed on the clipboard as HTML. The
+"content-type" of the clipboard will be appropriately set so that pasting
+applications can intelligently paste the text as richly formatted text. This
+is useful, for example, if you want to compose some text in markdown in vim
+and then paste it into your email client or word processor as properly
+formatted text.
+
+=============================================================================
+2. REQUIREMENTS ~
+                                                    *yanktohtml-requirements*
+
+This plugin relies on pandoc (https://pandoc.org/) and xclip
+(https://github.com/astrand/xclip). Both are easily installed on most Linux
+distros via the usual repos. They can probably be installed on Mac and
+Windows as well (via homebrew/cygwin/something) but I can't confirm that. It
+does rely on the "-target" feature of xclip, which was added some time in
+2010.
+
+=============================================================================
+3. USAGE ~
+                                                           *yanktohtml-usage*
+
+The plugin provides a single command:
+
+  :YankToHtml
+
+This will copy the entire file to the default register (as HTML, of course).
+You can optionally provide a register:
+
+  :YankToHtml a
+
+And/or a range:
+
+  :2,4YankToHtml
+
+The most useful way to use the range feature is to selection a section of
+text and then type `:YankToHtml`, allowing vim to insert the selection range
+on your behalf, which will end up looking like this:
+
+  :'<,'>YankToHtml
+
+Assuming the register you yanked into is connected to your system clipboard
+(see |clipboard|), you can go paste the contents into many applications and
+get richly formatted text.
+
+Unfortunately, xclip doesn't seem to support providing multiple type of
+content available simultaneously. This means that if you try to paste your
+clipboard into a program that can't handle the HTML content type (like, say,
+vim), you'll end up with actual HTML pasted. The workaround would be to just
+use a regular yank instead of `:YankToHtml`.
+
+" vim: set expandtab sts=2 ts=2 sw=2 tw=78 ft=help norl:
+
